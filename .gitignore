@@ -6,8 +6,3 @@ venv
 venv/
 .venv
 .venv/
-
-# Archivos Temporales
-*.pyc
-__pycache__/
-.DS_Store
