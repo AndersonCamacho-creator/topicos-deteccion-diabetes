@@ -1,0 +1,8 @@
+# Variables Entorno - Secret
+.env
+
+# Entorno Virtual
+venv
+venv/
+.venv
+.venv/
