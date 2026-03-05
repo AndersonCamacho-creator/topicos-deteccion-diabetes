@@ -38,10 +38,10 @@ topicos-deteccion-diabetes/
 │       └── diabetes.avsc
 │
 ├── 📁 documentation/                   # Rutas HDFS generadas (no versionadas)
-│       └── gold.csv                  # Archivo final consolidado
+│       └── informe.pdf                  # Archivo final consolidado
 ├── 📁 reports/                   # Rutas HDFS generadas (no versionadas)
 │       ├── temp/                     # Archivos temporales de exportación
-│       └── gold.csv                  # Archivo final consolidado
+│       └── report.pdf                 # Archivo final consolidado
 ├── 📁 scripts/                   # Rutas HDFS generadas (no versionadas)
 │       └── consulta_mongodb.py                  # Archivo final consolidado
 │
