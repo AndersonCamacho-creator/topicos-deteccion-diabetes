@@ -61,7 +61,7 @@ topicos-deteccion-diabetes/
 
 👨‍💻 Autores:
 - [Camacho Zamora Anderson David](https://github.com/AndersonCamacho-creator)
-- [Coronado Rodriguez Augusto Takeshi](https://github.com/TakeCoRo123)
+- [Coronado Rodriguez Takeshi](https://github.com/TakeCoRo123)
 - [Vásquez Acosta Evelin Yudith](https://github.com/evelin-vasquez-a)
 
 👨‍💻 CoAutor: 
