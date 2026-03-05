@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "DiabetesRecord",
+  "namespace": "diabetes.avro",
+  "fields": [
+    {"name": "Pregnancies", "type": ["string", "null"]},
+    {"name": "Glucose", "type": ["string", "null"]},
+    {"name": "BloodPressure", "type": ["string", "null"]},
+    {"name": "SkinThickness", "type": ["string", "null"]},
+    {"name": "Insulin", "type": ["string", "null"]},
+    {"name": "BMI", "type": ["string", "null"]},
+    {"name": "DiabetesPedigreeFunction", "type": ["string", "null"]},
+    {"name": "Age", "type": ["string", "null"]},
+    {"name": "Outcome", "type": ["string", "null"]}
+  ]
+}
