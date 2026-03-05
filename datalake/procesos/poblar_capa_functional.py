@@ -209,12 +209,11 @@ SCHEMA_FUNCTIONAL = StructType([
 # @section 5. Configuración de tablas
 # =============================================================================
 
-TABLAS_CONFIG = [
-    {
-        "nombre": "DIABETES_ANALYTICS",
-        "partitioned_by": ["risk_level"]
-    }
-]
+# Nombre de la tabla de origen en Curated
+SOURCE_TABLE_NAME = "DIABETES"
+
+# Nombre de la tabla de destino en Functional
+TARGET_TABLE_NAME = "DIABETES_ANALYTICS"
 
 # =============================================================================
 # @section 6. Proceso principal
@@ -232,73 +231,70 @@ def main():
         print(f"🌍 Entorno: {args.env}")
         print(f"🗄️  Base origen: {db_source}")
         print(f"🎯 Base destino: {db_functional}")
+        print(f"📋 Tabla origen: {SOURCE_TABLE_NAME}")
+        print(f"📋 Tabla destino: {TARGET_TABLE_NAME}")
         
         # 1. Crear database Functional
         crear_database(spark, env_lower, args.username, args.base_path)
         
-        # 2. Procesar cada tabla
-        for config in TABLAS_CONFIG:
-            table_name = config["nombre"]
-            print(f"\n📥 Procesando tabla Functional: {table_name}")
-            
-            # Definir ubicación física de la tabla
-            location = f"{args.base_path}/{args.username}/datalake/{db_functional.upper()}/{table_name.lower()}"
-            
-            # A. Crear estructura de tabla Functional
-            crear_tabla_functional(
-                spark=spark,
-                db_name=db_functional,
-                table_name=table_name,
-                schema=SCHEMA_FUNCTIONAL,
-                location=location
-            )
-            
-            # B. Leer datos desde Curated
-            print(f"   📖 Leyendo datos desde {db_source}.{table_name}")
-            df_source = spark.table(f"{db_source}.{table_name}")
-            
-            # Mostrar información del origen
-            count_origen = df_source.count()
-            print(f"   📊 Registros en origen: {count_origen}")
-            
-            # C. Aplicar enriquecimiento
-            df_enriched = enriquecer_datos_diabetes(df_source)
-            
-            # D. Insertar en Functional
-            print(f"   💾 Insertando datos enriquecidos...")
-            df_enriched.write \
-                .mode("overwrite") \
-                .format("parquet") \
-                .option("compression", "snappy") \
-                .partitionBy("risk_level") \
-                .saveAsTable(f"{db_functional}.{table_name}")
-            
-            # Refrescar metadatos
-            spark.sql(f"MSCK REPAIR TABLE {db_functional}.{table_name}")
-            
-            # E. Validación
-            print(f"   🔍 Validando carga en {db_functional}.{table_name}:")
-            spark.sql(f"SELECT * FROM {db_functional}.{table_name} LIMIT 5").show(truncate=False)
-            
-            # F. Estadísticas por nivel de riesgo
-            print(f"   📊 Distribución por nivel de riesgo:")
-            spark.sql(f"""
-                SELECT risk_level, 
-                       COUNT(*) as cantidad,
-                       ROUND(AVG(glucose), 1) as glucose_prom,
-                       ROUND(AVG(bmi), 1) as bmi_prom
-                FROM {db_functional}.{table_name} 
-                GROUP BY risk_level 
-                ORDER BY risk_level
-            """).show()
-            
-            # G. Mostrar particiones
-            print(f"   📂 Particiones disponibles:")
-            spark.sql(f"SHOW PARTITIONS {db_functional}.{table_name}").show(truncate=False)
-            
-            # H. Calcular métricas agregadas
-            metricas = calcular_metricas_agregadas(spark, db_functional, table_name)
-            metricas.show()
+        # 2. Definir ubicación física de la tabla de destino
+        location = f"{args.base_path}/{args.username}/datalake/{db_functional.upper()}/{TARGET_TABLE_NAME.lower()}"
+        
+        # 3. Crear estructura de tabla Functional 
+        crear_tabla_functional(
+            spark=spark,
+            db_name=db_functional,
+            table_name=TARGET_TABLE_NAME,
+            schema=SCHEMA_FUNCTIONAL,
+            location=location
+        )
+        
+        # 4. Leer datos desde Curated
+        print(f"   📖 Leyendo datos desde {db_source}.{SOURCE_TABLE_NAME}")
+        df_source = spark.table(f"{db_source}.{SOURCE_TABLE_NAME}")
+        
+        # Mostrar información del origen
+        count_origen = df_source.count()
+        print(f"   📊 Registros en origen: {count_origen}")
+        
+        # 5. Aplicar enriquecimiento
+        df_enriched = enriquecer_datos_diabetes(df_source)
+        
+        # 6. Insertar en Functional
+        print(f"   💾 Insertando datos enriquecidos en {TARGET_TABLE_NAME}...")
+        df_enriched.write \
+            .mode("overwrite") \
+            .format("parquet") \
+            .option("compression", "snappy") \
+            .partitionBy("risk_level") \
+            .saveAsTable(f"{db_functional}.{TARGET_TABLE_NAME}")
+        
+        # Refrescar metadatos
+        spark.sql(f"MSCK REPAIR TABLE {db_functional}.{TARGET_TABLE_NAME}")
+        
+        # 7. Validación
+        print(f"   🔍 Validando carga en {db_functional}.{TARGET_TABLE_NAME}:")
+        spark.sql(f"SELECT * FROM {db_functional}.{TARGET_TABLE_NAME} LIMIT 5").show(truncate=False)
+        
+        # 8. Estadísticas por nivel de riesgo
+        print(f"   📊 Distribución por nivel de riesgo:")
+        spark.sql(f"""
+            SELECT risk_level, 
+                   COUNT(*) as cantidad,
+                   ROUND(AVG(glucose), 1) as glucose_prom,
+                   ROUND(AVG(bmi), 1) as bmi_prom
+            FROM {db_functional}.{TARGET_TABLE_NAME} 
+            GROUP BY risk_level 
+            ORDER BY risk_level
+        """).show()
+        
+        # 9. Mostrar particiones
+        print(f"   📂 Particiones disponibles:")
+        spark.sql(f"SHOW PARTITIONS {db_functional}.{TARGET_TABLE_NAME}").show(truncate=False)
+        
+        # 10. Calcular métricas agregadas
+        metricas = calcular_metricas_agregadas(spark, db_functional, TARGET_TABLE_NAME)
+        metricas.show()
         
         print("\n🎉 Proceso Functional completado exitosamente!")
         print(f"📊 Tablas disponibles en {db_functional}:")

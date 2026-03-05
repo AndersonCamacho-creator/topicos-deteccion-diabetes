@@ -114,7 +114,7 @@ def main():
         
         # 2. Configuración de la tabla
         table_name = "DIABETES"
-        archivo_datos = "diabetes.data"  # Tu archivo con separador pipe
+        archivo_datos = "diabetes.data"
         esquema = SCHEMA_DIABETES
         
         # 3. Definir rutas
