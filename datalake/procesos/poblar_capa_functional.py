@@ -211,7 +211,7 @@ SCHEMA_FUNCTIONAL = StructType([
 
 TABLAS_CONFIG = [
     {
-        "nombre": "DIABETES",
+        "nombre": "DIABETES_ANALYTICS",
         "partitioned_by": ["risk_level"]
     }
 ]
