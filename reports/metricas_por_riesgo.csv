@@ -1,9 +1,0 @@
-risk_level,outcome,glucose_prom,bmi_prom,edad_prom,presion_prom,total_pacientes
-ALTO,0,142.0,36.1,50.3,87.8,20
-ALTO,1,157.2,36.8,48.1,86.3,56
-BAJO,0,106.4,31.3,28.7,69.7,204
-BAJO,1,115.2,32.2,32.5,71.1,59
-MEDIO,0,121.7,34.1,37.0,75.4,159
-MEDIO,1,147.8,36.3,34.8,73.0,151
-MUY BAJO,0,97.6,24.9,24.3,63.9,117
-MUY BAJO,1,115.5,25.2,29.5,66.0,2

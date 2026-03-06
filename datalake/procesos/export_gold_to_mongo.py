@@ -14,7 +14,7 @@ import subprocess
 # CONFIGURACIÓN
 # =============================================================================
 
-MONGO_IP = "172.28.0.1"
+MONGO_IP = "172.28.112.1"
 MONGO_PORT = "27017"
 MONGO_DATABASE = "medallondiabetes"
 MONGO_COLLECTION_PRINCIPAL = "gold_diabetes_analytics"

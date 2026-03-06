@@ -1,3 +1,0 @@
-tipo,nombre,registros,archivo
-Tabla Principal,diabetes_analytics,768,/home/hadoop/topicos-deteccion-diabetes/reports/diabetes_analytics.csv
-Tabla Métricas,metricas_por_riesgo,8,/home/hadoop/topicos-deteccion-diabetes/reports/metricas_por_riesgo.csv
