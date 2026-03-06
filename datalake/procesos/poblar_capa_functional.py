@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*- 
 """
 Script PySpark para despliegue de capa Functional (Parquet) - Detección de Diabetes
 Proyecto: topicos-deteccion-diabetes
