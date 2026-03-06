@@ -145,7 +145,7 @@ def exportar_csv_a_mongodb(spark, csv_path, nombre_tabla, collection_name):
 def main():
     # Crear sesión Spark
     spark = SparkSession.builder \
-        .appName("Diabetes_CSV_to_MongoDB_Gold") \
+        .appName("Diabetes_Gold_to_MongoDB") \
         .config("spark.mongodb.connection.uri", f"mongodb://{MONGO_IP}:{MONGO_PORT}") \
         .config("spark.mongodb.database", MONGO_DATABASE) \
         .getOrCreate()

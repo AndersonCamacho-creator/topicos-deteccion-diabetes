@@ -29,7 +29,7 @@ def parse_arguments():
 # @section 2. Inicialización de SparkSession
 # =============================================================================
 
-def create_spark_session(app_name="ProcesoFunctional-Diabetes-TopicosUNC"):
+def create_spark_session(app_name="Proceso_Carga_Functional_Diabetes"):
     return SparkSession.builder \
         .appName(app_name) \
         .enableHiveSupport() \

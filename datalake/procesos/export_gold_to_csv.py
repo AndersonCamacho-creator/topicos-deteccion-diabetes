@@ -16,7 +16,7 @@ from datetime import datetime
 
 # Crear sesión Spark con soporte Hive
 spark = SparkSession.builder \
-    .appName("Export-Diabetes-Gold-To-CSV") \
+    .appName("Diabetes_Gold_to_CSV") \
     .enableHiveSupport() \
     .getOrCreate()
 
